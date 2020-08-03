@@ -53,6 +53,8 @@ class GameFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(GameViewModel::class.java)
 
+        binding.gameViewModel = viewModel
+
         /** Setting up LiveData observation relationship **/
         viewModel.word.observe(viewLifecycleOwner, Observer { newWord ->
             binding.wordText.text = newWord
@@ -90,7 +92,7 @@ class GameFragment : Fragment() {
     private fun gameFinished() {
         Toast.makeText(activity, "Game has just finished", Toast.LENGTH_SHORT).show()
         val action = GameFragmentDirections.actionGameToScore()
-        action.score = viewModel.score.value?:0
+        action.score = viewModel.score.value ?: 0
         findNavController(this).navigate(action)
         viewModel.onGameFinishComplete()
     }
